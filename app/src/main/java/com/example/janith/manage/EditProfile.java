@@ -1,5 +1,6 @@
 package com.example.janith.manage;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,62 +17,58 @@ public class EditProfile extends AppCompatActivity {
     private RadioGroup radioGroup;
     String genderEditeProfile=null;
     Button Editeprofile,searchBtn;
-    EditText searchIDIN,usernameS;
+    EditText searchIDIN,bithdaySET,passwordSET,usernameSET;
     private RadioButton radioButton;
-    List data= new ArrayList();
+    DBhelper dBhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+         dBhelper = new DBhelper(EditProfile.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        final DBhelper dbHe=null;
+
         searchIDIN=findViewById(R.id.searchID);
+        usernameSET=findViewById(R.id.username);
+        bithdaySET=findViewById(R.id.bithday);
+        passwordSET=findViewById(R.id.password);
+
         searchBtn=findViewById(R.id.serch);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String idsearch=searchIDIN.getText().toString();
+                if (idsearch == null){
+                    Toast.makeText(EditProfile.this,"Please enter a username",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    UserProfile.Users users_search = dBhelper.readAllInfor(idsearch);
 
-                data=dbHe.readAllInfo(idsearch);
-                usernameS.setText((CharSequence) data);
+
+                    if(users_search == null){
+                        Toast.makeText(EditProfile.this,"Please enter a valid username",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        usernameSET.setText(users_search.getUsername());
+                        passwordSET.setText(users_search.getPassword());
+                        bithdaySET.setText(users_search.getDob());
+
+                    }
+                }
 
 
-            }
+                }
         });
         Editeprofile=findViewById(R.id.update);
         Editeprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addListenerOnButton();
+
             }
         });
     }
-    public void addListenerOnButton() {
 
-
-        Editeprofile = (Button) findViewById(R.id.update);
-
-        Editeprofile.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                radioGroup =  findViewById(R.id.genderSd);
-                // get selected radio button from radioGroup
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-
-                // find the radiobutton by returned id
-                radioButton = (RadioButton) findViewById(selectedId);
-                genderEditeProfile=radioButton.getText().toString();
-
-                Toast.makeText(EditProfile.this,
-                        genderEditeProfile, Toast.LENGTH_SHORT).show();
-
-            }
-
-        });
-
-    }
 
 
 }

@@ -16,7 +16,7 @@ import static com.example.janith.manage.UserProfile.Users.COLUMN_NAME_USERNAME;
 import static com.example.janith.manage.UserProfile.Users.Table_Name;
 
 public class DBhelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="userI-nfo.db";
+    public static final String DATABASE_NAME="user-Info.db";
     public DBhelper( Context context) {
         super(context, DATABASE_NAME, null, 2);
     }
@@ -75,7 +75,7 @@ public class DBhelper extends SQLiteOpenHelper {
         }
     }
 
-public ArrayList<UserProfile.Users> readAllInfo()
+public ArrayList<UserProfile.Users> readAllInfor()
 {
     ArrayList<UserProfile.Users> userList = new ArrayList<>();
     SQLiteDatabase db=getReadableDatabase();
@@ -107,7 +107,7 @@ public ArrayList<UserProfile.Users> readAllInfo()
     }
     return userList;
 }
-    public UserProfile.Users readAllInfo(String ID)
+    public UserProfile.Users readAllInfor(String ID)
     {
         SQLiteDatabase db=getWritableDatabase();
         String[] projection={COLUMN_NAME_ID,
@@ -132,8 +132,7 @@ public ArrayList<UserProfile.Users> readAllInfo()
                 users.setId(Integer.parseInt(cursor.getString(0)));
                 users.setUsername(cursor.getString(1));
                 users.setPassword(cursor.getString(2));
-                users.setGender(cursor.getString(3));
-                users.setDob(cursor.getString(4));
+                users.setDob(cursor.getString(3));
 
                return  users;
             }

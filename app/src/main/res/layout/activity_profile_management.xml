@@ -6,21 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ProfileManagement">
 
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="8dp"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderS"
-        app:layout_constraintVertical_bias="0.247" />
+
 
     <EditText
-        android:id="@+id/username4"
+        android:id="@+id/InPasswordPro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,7 +26,7 @@
         app:layout_constraintVertical_bias="0.372" />
 
     <EditText
-        android:id="@+id/username5"
+        android:id="@+id/InDBOPRo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -54,13 +43,21 @@
         app:layout_constraintVertical_bias="0.254" />
 
     <EditText
-        android:id="@+id/username2"
+        android:id="@+id/InUsernamePro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="63dp" />
+        app:layout_constraintBottom_toTopOf="@+id/InDBOPRo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.731"
+        app:layout_constraintStart_toEndOf="@+id/usernamePro"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.559" />
 
     <TextView
         android:id="@+id/gender"
@@ -81,7 +78,7 @@
         app:layout_constraintVertical_bias="0.509" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/passwordPro"
         android:layout_width="99dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
@@ -99,7 +96,7 @@
         app:layout_constraintVertical_bias="0.367" />
 
     <TextView
-        android:id="@+id/userbirth2"
+        android:id="@+id/DBOPro"
         android:layout_width="125dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
@@ -117,7 +114,7 @@
         app:layout_constraintVertical_bias="0.254" />
 
     <TextView
-        android:id="@+id/uname5"
+        android:id="@+id/usernamePro"
         android:layout_width="99dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
@@ -135,7 +132,7 @@
         app:layout_constraintVertical_bias="0.101" />
 
     <RadioGroup
-        android:id="@+id/genderS"
+        android:id="@+id/genderPro"
         android:layout_width="216dp"
         android:layout_height="43dp"
         android:layout_marginStart="8dp"
@@ -147,7 +144,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.765"
         app:layout_constraintStart_toEndOf="@+id/gender"
-        app:layout_constraintTop_toBottomOf="@+id/username4"
+        app:layout_constraintTop_toBottomOf="@+id/InPasswordPro"
         app:layout_constraintVertical_bias="0.052">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -186,20 +183,20 @@
             app:layout_constraintVertical_bias="0.523" />
     </RadioGroup>
     <Button
-        android:id="@+id/edit"
+        android:id="@+id/Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Edit"
+        android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.644"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderS"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintTop_toBottomOf="@+id/genderPro"
+        app:layout_constraintVertical_bias="0.182" />
 
 
 </android.support.constraint.ConstraintLayout>
