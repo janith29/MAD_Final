@@ -50,7 +50,7 @@ public class DBhelper extends SQLiteOpenHelper {
         return  newrecode;
     }
 
-    public boolean updateInfor(String username,String DOB,String gender,String ID,String password)
+    public boolean updateInfor(String username,String DOB,String gender,String password,String ID)
     {
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
@@ -80,9 +80,9 @@ public ArrayList<UserProfile.Users> readAllInfor()
     ArrayList<UserProfile.Users> userList = new ArrayList<>();
     SQLiteDatabase db=getReadableDatabase();
     String[] projection={COLUMN_NAME_ID,
-        COLUMN_NAME_USERNAME,
-        COLUMN_NAME_DATEOfBIRTH,
-        COLUMN_NAME_GENDER};
+            COLUMN_NAME_USERNAME,COLUMN_NAME_PASSWORD,
+            COLUMN_NAME_DATEOfBIRTH,
+            COLUMN_NAME_GENDER};
 
     String sortOder=COLUMN_NAME_ID+"DESC";
 
@@ -100,8 +100,7 @@ public ArrayList<UserProfile.Users> readAllInfor()
         users.setId(Integer.parseInt(cursor.getString(0)));
         users.setUsername(cursor.getString(1));
         users.setPassword(cursor.getString(2));
-        users.setGender(cursor.getString(3));
-        users.setDob(cursor.getString(4));
+        users.setDob(cursor.getString(3));
 
         userList.add(users);
     }
@@ -111,7 +110,7 @@ public ArrayList<UserProfile.Users> readAllInfor()
     {
         SQLiteDatabase db=getWritableDatabase();
         String[] projection={COLUMN_NAME_ID,
-                COLUMN_NAME_USERNAME,
+                COLUMN_NAME_USERNAME,COLUMN_NAME_PASSWORD,
                 COLUMN_NAME_DATEOfBIRTH,
                 COLUMN_NAME_GENDER};
 
@@ -133,8 +132,10 @@ public ArrayList<UserProfile.Users> readAllInfor()
                 users.setUsername(cursor.getString(1));
                 users.setPassword(cursor.getString(2));
                 users.setDob(cursor.getString(3));
+                users.setGender(cursor.getString(4));
 
-               return  users;
+
+            return  users;
             }
             return null;
     }

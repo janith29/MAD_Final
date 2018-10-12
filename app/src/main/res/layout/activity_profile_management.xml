@@ -145,7 +145,7 @@
         app:layout_constraintHorizontal_bias="0.765"
         app:layout_constraintStart_toEndOf="@+id/gender"
         app:layout_constraintTop_toBottomOf="@+id/InPasswordPro"
-        app:layout_constraintVertical_bias="0.052">
+        app:layout_constraintVertical_bias="0.162">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.703"
@@ -197,6 +197,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genderPro"
         app:layout_constraintVertical_bias="0.182" />
+
+
 
 
 </android.support.constraint.ConstraintLayout>
