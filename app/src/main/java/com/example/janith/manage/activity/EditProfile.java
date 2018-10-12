@@ -1,6 +1,6 @@
-package com.example.janith.manage;
+package com.example.janith.manage.activity;
 
-import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +11,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.janith.manage.R;
+import com.example.janith.manage.database.DBhelper;
+import com.example.janith.manage.database.UserProfile;
 
 public class EditProfile extends AppCompatActivity {
     private RadioGroup radioGroup;
@@ -21,7 +22,6 @@ public class EditProfile extends AppCompatActivity {
     EditText searchIDIN,bithdaySET,passwordSET,usernameSET;
     private RadioButton radioButton;
     DBhelper dBhelper;
-    TextView Ingenderview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,40 +32,43 @@ public class EditProfile extends AppCompatActivity {
 
 
         searchIDIN=findViewById(R.id.searchID);
-        Ingenderview=findViewById(R.id.Ingender);
         usernameSET=findViewById(R.id.username);
         bithdaySET=findViewById(R.id.bithday);
         passwordSET=findViewById(R.id.password);
         deleteuser=findViewById(R.id.Deleteuser);
 
+        radioGroup =  findViewById(R.id.genderEdit);
         searchBtn=findViewById(R.id.serch);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String idsearch=searchIDIN.getText().toString();
-                if (idsearch == null){
+                if (idsearch.isEmpty()){
                     Toast.makeText(EditProfile.this,"Please enter a ID",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    UserProfile.Users users_search = dBhelper.readAllInfor(idsearch);
-
-
-                    if(users_search == null){
-                        Toast.makeText(EditProfile.this,"Please enter a valid ID",Toast.LENGTH_SHORT).show();
+                    Cursor cursor=dBhelper.readAllInfor(idsearch);
+                    if(cursor.getCount()==0){
                         usernameSET.setText(" ");
                         passwordSET.setText(" ");
                         bithdaySET.setText(" ");
-                        Ingenderview.setText(" ");
+                        radioGroup.clearCheck();
+                        Toast.makeText(EditProfile.this,"Please enter a valid ID",Toast.LENGTH_SHORT).show();
+
                     }
-                    else{
-                        usernameSET.setText(users_search.getUsername());
-                        passwordSET.setText(users_search.getPassword());
-                        bithdaySET.setText(users_search.getDob());
-                        Ingenderview.setText(users_search.getGender());
+                    else {
+                        while (cursor.moveToNext()) {
+                            usernameSET.setText(cursor.getString(1));
+                            passwordSET.setText(cursor.getString(2));
+                            bithdaySET.setText(cursor.getString(3));
+                            if (cursor.getString(4).equals("Male")) {
+                                radioGroup.check(R.id.male);
+                            } else if (cursor.getString(4).equals("Female"))
+                                radioGroup.check(R.id.female);
+                        }
                     }
+
                 }
-
-
                 }
         });
         Editeprofile=findViewById(R.id.update);
@@ -80,10 +83,10 @@ public class EditProfile extends AppCompatActivity {
                 userDBO=bithdaySET.getText().toString();
                 userpaass=passwordSET.getText().toString();
 
-                radioGroup =  findViewById(R.id.genderEdit);
                 // get selected radio button from radioGroup
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 // find the radiobutton by returned id
+
                 radioButton =findViewById(selectedId);
                 genderselect=radioButton.getText().toString();
 
@@ -115,7 +118,7 @@ public class EditProfile extends AppCompatActivity {
                     usernameSET.setText(" ");
                     passwordSET.setText(" ");
                     bithdaySET.setText(" ");
-                    Ingenderview.setText(" ");
+                    radioGroup.clearCheck();
                     Toast.makeText(EditProfile.this, "Done Delete", Toast.LENGTH_LONG).show();
                 }
             }

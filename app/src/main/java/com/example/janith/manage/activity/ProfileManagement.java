@@ -1,4 +1,4 @@
-package com.example.janith.manage;
+package com.example.janith.manage.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.example.janith.manage.R;
+import com.example.janith.manage.database.DBhelper;
 
 public class ProfileManagement extends AppCompatActivity {
 
@@ -47,7 +50,7 @@ public class ProfileManagement extends AppCompatActivity {
                 long addn = dBhelper.addinfo(UserName, userDBO, genderselect, userpaass);
 
                 if(addn>0) {
-                    Toast.makeText(ProfileManagement.this, "Add data", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileManagement.this, "Insert data successful", Toast.LENGTH_LONG).show();
                 }
                 else
                 {

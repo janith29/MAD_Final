@@ -1,4 +1,4 @@
-package com.example.janith.manage;
+package com.example.janith.manage.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,15 +8,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import static com.example.janith.manage.UserProfile.Users.COLUMN_NAME_DATEOfBIRTH;
-import static com.example.janith.manage.UserProfile.Users.COLUMN_NAME_GENDER;
-import static com.example.janith.manage.UserProfile.Users.COLUMN_NAME_ID;
-import static com.example.janith.manage.UserProfile.Users.COLUMN_NAME_PASSWORD;
-import static com.example.janith.manage.UserProfile.Users.COLUMN_NAME_USERNAME;
-import static com.example.janith.manage.UserProfile.Users.Table_Name;
+import static com.example.janith.manage.database.UserProfile.Users.COLUMN_NAME_DATEOfBIRTH;
+import static com.example.janith.manage.database.UserProfile.Users.COLUMN_NAME_GENDER;
+import static com.example.janith.manage.database.UserProfile.Users.COLUMN_NAME_ID;
+import static com.example.janith.manage.database.UserProfile.Users.COLUMN_NAME_PASSWORD;
+import static com.example.janith.manage.database.UserProfile.Users.COLUMN_NAME_USERNAME;
+import static com.example.janith.manage.database.UserProfile.Users.Table_Name;
 
 public class DBhelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="user-Info.db";
+    public static final String DATABASE_NAME="user-Info1.db";
     public DBhelper( Context context) {
         super(context, DATABASE_NAME, null, 2);
     }
@@ -36,6 +36,20 @@ public class DBhelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+    public long checkUser(String username, String password) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] selectionArgs = {username, password};
+        String query = "SELECT * FROM " + Table_Name + " WHERE "+ COLUMN_NAME_USERNAME + " = ? AND " +
+                COLUMN_NAME_PASSWORD + " = ?";
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        long userId = -1;
+        if (cursor.moveToNext()) {
+            userId = cursor.getLong(0);
+        }
+        return userId;
     }
     public long addinfo(String username,String DOB,String gender,String password)
     {
@@ -75,16 +89,17 @@ public class DBhelper extends SQLiteOpenHelper {
         }
     }
 
-public ArrayList<UserProfile.Users> readAllInfor()
+public Cursor readAllInfor()
 {
-    ArrayList<UserProfile.Users> userList = new ArrayList<>();
     SQLiteDatabase db=getReadableDatabase();
-    String[] projection={COLUMN_NAME_ID,
-            COLUMN_NAME_USERNAME,COLUMN_NAME_PASSWORD,
+    String[] projection={
+            COLUMN_NAME_ID,
+            COLUMN_NAME_USERNAME,
+            COLUMN_NAME_PASSWORD,
             COLUMN_NAME_DATEOfBIRTH,
             COLUMN_NAME_GENDER};
 
-    String sortOder=COLUMN_NAME_ID+"DESC";
+    String sortOder=COLUMN_NAME_ID+" DESC";
 
     Cursor cursor=db.query(Table_Name,
                     projection,
@@ -94,23 +109,16 @@ public ArrayList<UserProfile.Users> readAllInfor()
                     null,
                     sortOder);
 
-    while (cursor.moveToNext()){
-        UserProfile.Users users = UserProfile.getProfile().getUser();
 
-        users.setId(Integer.parseInt(cursor.getString(0)));
-        users.setUsername(cursor.getString(1));
-        users.setPassword(cursor.getString(2));
-        users.setDob(cursor.getString(3));
-
-        userList.add(users);
-    }
-    return userList;
+    return cursor;
 }
-    public UserProfile.Users readAllInfor(String ID)
+    public Cursor readAllInfor(String ID)
     {
         SQLiteDatabase db=getWritableDatabase();
-        String[] projection={COLUMN_NAME_ID,
-                COLUMN_NAME_USERNAME,COLUMN_NAME_PASSWORD,
+        String[] projection={
+                COLUMN_NAME_ID,
+                COLUMN_NAME_USERNAME,
+                COLUMN_NAME_PASSWORD,
                 COLUMN_NAME_DATEOfBIRTH,
                 COLUMN_NAME_GENDER};
 
@@ -124,20 +132,7 @@ public ArrayList<UserProfile.Users> readAllInfor()
                 null,
                 null);
 
-
-        if (cursor.moveToNext()){
-                UserProfile.Users users = UserProfile.getProfile().getUser();
-
-                users.setId(Integer.parseInt(cursor.getString(0)));
-                users.setUsername(cursor.getString(1));
-                users.setPassword(cursor.getString(2));
-                users.setDob(cursor.getString(3));
-                users.setGender(cursor.getString(4));
-
-
-            return  users;
-            }
-            return null;
+            return cursor;
     }
     public int deleteInfo(String ID)
     {
